@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>VDD — Reventa con vibra rara</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap">
+<style>
+:root{--bg:#F4F0FA;--ink:#1A0F2E;--acc:#FF5A36;--on-acc:#1A0F2E;--mint:#A6EBCD;--card:#FFFFFF;--line:#DDD3EC;--mut:#5E4F78;color-scheme:light;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#130A22;--ink:#F3ECFC;--acc:#FF7A59;--mint:#7FD9B6;--card:#1D1230;--line:#34244E;--mut:#B8A9D2;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#130A22;--ink:#F3ECFC;--acc:#FF7A59;--mint:#7FD9B6;--card:#1D1230;--line:#34244E;--mut:#B8A9D2;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.6;overflow-x:hidden}
+.wrap{max-width:760px;margin:0 auto;padding:0 24px}
+header{display:flex;justify-content:space-between;align-items:center;padding:22px 0;border-bottom:1px solid var(--line)}
+.brand{font-weight:800;font-size:1.5rem;letter-spacing:-.04em}
+.brand i{font-style:normal;color:var(--acc)}
+header a{color:var(--ink);font-weight:600;font-size:.95rem;text-decoration:none;border:1.5px solid var(--ink);padding:8px 16px;border-radius:99px}
+.hero{padding:64px 0 56px}
+.hero p.k{display:inline-block;background:var(--mint);color:#1A0F2E;font-weight:600;font-size:.95rem;padding:5px 14px;border-radius:99px;margin:0 0 22px}
+h1{font-size:clamp(2.6rem,11vw,4.6rem);line-height:.98;letter-spacing:-.045em;font-weight:800;margin:0 0 22px;max-width:12ch}
+.lead{font-size:1.2rem;color:var(--mut);max-width:52ch;margin:0 0 30px}
+.btns{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-block;font-weight:800;text-decoration:none;padding:15px 26px;border-radius:99px;background:var(--acc);color:var(--on-acc);font-size:1.02rem}
+.btn.o{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+.btn:focus-visible,header a:focus-visible{outline:3px solid var(--acc);outline-offset:3px}
+section{padding:48px 0;border-top:1px solid var(--line)}
+h2{font-size:clamp(1.7rem,6vw,2.2rem);line-height:1.1;letter-spacing:-.03em;margin:0 0 16px}
+p{margin:0 0 14px;max-width:60ch}
+.meaning{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:22px}
+.meaning div{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 12px;text-align:center}
+.meaning b{display:block;font-size:2.4rem;line-height:1;letter-spacing:-.05em;color:var(--acc)}
+.meaning span{font-size:.85rem;color:var(--mut)}
+.grid{display:grid;gap:14px;margin-top:20px}
+@media(min-width:620px){.grid{grid-template-columns:repeat(3,1fr)}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px}
+.card h3{margin:0 0 6px;font-size:1.1rem;letter-spacing:-.01em}
+.card p{margin:0;color:var(--mut);font-size:.96rem}
+.step{width:34px;height:34px;border-radius:50%;background:var(--ink);color:var(--bg);display:grid;place-items:center;font-weight:800;margin-bottom:12px}
+.final{text-align:center;padding:64px 0}
+.final p{margin:0 auto 26px;color:var(--mut)}
+footer{border-top:1px solid var(--line);padding:24px 0 36px;color:var(--mut);font-size:.9rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">VDD<i>.</i></div>
+    <a href="https://instagram.com/VDD.look" target="_blank" rel="noopener">@VDD.look</a>
+  </header>
+
+  <div class="hero">
+    <p class="k">Vibe Odd · Vibra rara</p>
+    <h1>Lo raro es tu mejor estilo.</h1>
+    <p class="lead">VDD es una marca de reventa que vende de todo: piezas seleccionadas a mano para quienes prefieren un estilo propio antes que la tendencia de todos.</p>
+    <div class="btns">
+      <a class="btn" href="https://instagram.com/VDD.look" target="_blank" rel="noopener">Ver las piezas en Instagram</a>
+      <a class="btn o" href="#marca">Conocer la marca</a>
+    </div>
+  </div>
+
+  <section id="marca">
+    <h2>Qué significa VDD</h2>
+    <p>VDD viene de <strong>Vibe Odd</strong>, “vibra rara”. Es nuestra forma de decir que lo distinto no es un defecto: es lo que hace que algo se recuerde.</p>
+    <div class="meaning">
+      <div><b>Vibe</b><span>Energía y actitud</span></div>
+      <div><b>Odd</b><span>Raro, fuera de lo común</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Por qué VDD</h2>
+    <div class="grid">
+      <div class="card"><h3>Selección curada</h3><p>Cada pieza se elige por su carácter y su estado, no por volumen.</p></div>
+      <div class="card"><h3>Piezas únicas</h3><p>Reventa significa pocas unidades: lo que ves puede no volver.</p></div>
+      <div class="card"><h3>Segunda vida</h3><p>Dar otra oportunidad a lo que ya existe es elegir distinto y consumir con más conciencia.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Cómo comprar</h2>
+    <div class="grid">
+      <div class="card"><div class="step">1</div><h3>Elige</h3><p>Mira las piezas disponibles en nuestro Instagram.</p></div>
+      <div class="card"><div class="step">2</div><h3>Escríbenos</h3><p>Mándanos un mensaje directo para apartar la tuya.</p></div>
+      <div class="card"><div class="step">3</div><h3>Disfrútala</h3><p>Coordinamos el pago y la entrega contigo.</p></div>
+    </div>
+  </section>
+
+  <section class="final">
+    <h2>Encuentra tu vibra rara</h2>
+    <p>Novedades y piezas nuevas de todo tipo en Instagram.</p>
+    <a class="btn" href="https://instagram.com/VDD.look" target="_blank" rel="noopener">Síguenos en @VDD.look</a>
+  </section>
+
+  <footer><span>VDD · Vibe Odd</span><span>Reventa con vibra rara</span></footer>
+</div>
+</body>
+</html>
