@@ -6,95 +6,447 @@
 <title>VDD — Reventa con vibra rara</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap">
 <style>
-:root{--bg:#F4F0FA;--ink:#1A0F2E;--acc:#FF5A36;--on-acc:#1A0F2E;--mint:#A6EBCD;--card:#FFFFFF;--line:#DDD3EC;--mut:#5E4F78;color-scheme:light;
-box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#130A22;--ink:#F3ECFC;--acc:#FF7A59;--mint:#7FD9B6;--card:#1D1230;--line:#34244E;--mut:#B8A9D2;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#130A22;--ink:#F3ECFC;--acc:#FF7A59;--mint:#7FD9B6;--card:#1D1230;--line:#34244E;--mut:#B8A9D2;color-scheme:dark}
-*{box-sizing:border-box}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.6;overflow-x:hidden}
-.wrap{max-width:760px;margin:0 auto;padding:0 24px}
-header{display:flex;justify-content:space-between;align-items:center;padding:22px 0;border-bottom:1px solid var(--line)}
-.brand{font-weight:800;font-size:1.5rem;letter-spacing:-.04em}
-.brand i{font-style:normal;color:var(--acc)}
-header a{color:var(--ink);font-weight:600;font-size:.95rem;text-decoration:none;border:1.5px solid var(--ink);padding:8px 16px;border-radius:99px}
-.hero{padding:64px 0 56px}
-.hero p.k{display:inline-block;background:var(--mint);color:#1A0F2E;font-weight:600;font-size:.95rem;padding:5px 14px;border-radius:99px;margin:0 0 22px}
-h1{font-size:clamp(2.6rem,11vw,4.6rem);line-height:.98;letter-spacing:-.045em;font-weight:800;margin:0 0 22px;max-width:12ch}
-.lead{font-size:1.2rem;color:var(--mut);max-width:52ch;margin:0 0 30px}
-.btns{display:flex;flex-wrap:wrap;gap:12px}
-.btn{display:inline-block;font-weight:800;text-decoration:none;padding:15px 26px;border-radius:99px;background:var(--acc);color:var(--on-acc);font-size:1.02rem}
-.btn.o{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
-.btn:focus-visible,header a:focus-visible{outline:3px solid var(--acc);outline-offset:3px}
-section{padding:48px 0;border-top:1px solid var(--line)}
-h2{font-size:clamp(1.7rem,6vw,2.2rem);line-height:1.1;letter-spacing:-.03em;margin:0 0 16px}
-p{margin:0 0 14px;max-width:60ch}
-.meaning{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:22px}
-.meaning div{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 12px;text-align:center}
-.meaning b{display:block;font-size:2.4rem;line-height:1;letter-spacing:-.05em;color:var(--acc)}
-.meaning span{font-size:.85rem;color:var(--mut)}
-.grid{display:grid;gap:14px;margin-top:20px}
-@media(min-width:620px){.grid{grid-template-columns:repeat(3,1fr)}}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px}
-.card h3{margin:0 0 6px;font-size:1.1rem;letter-spacing:-.01em}
-.card p{margin:0;color:var(--mut);font-size:.96rem}
-.step{width:34px;height:34px;border-radius:50%;background:var(--ink);color:var(--bg);display:grid;place-items:center;font-weight:800;margin-bottom:12px}
-.final{text-align:center;padding:64px 0}
-.final p{margin:0 auto 26px;color:var(--mut)}
-footer{border-top:1px solid var(--line);padding:24px 0 36px;color:var(--mut);font-size:.9rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+:root {
+  --bg: #08060D;
+  --bg-card: rgba(23, 16, 38, 0.65);
+  --ink: #F5F0FF;
+  --acc: #FF5A36;
+  --acc-glow: rgba(255, 90, 54, 0.4);
+  --mint: #A6EBCD;
+  --mint-glow: rgba(166, 235, 205, 0.3);
+  --purple: #8B5CF6;
+  --line: rgba(221, 211, 236, 0.12);
+  --mut: #A395C4;
+  color-scheme: dark;
+  box-sizing: border-box;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Bricolage Grotesque", system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Fondo dinámico y luces */
+.bg-mesh {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.45;
+  animation: float 14s infinite ease-in-out alternate;
+}
+
+.orb-1 {
+  width: 320px; height: 320px;
+  background: var(--acc);
+  top: -80px; left: -60px;
+}
+
+.orb-2 {
+  width: 380px; height: 380px;
+  background: var(--purple);
+  top: 40%; right: -100px;
+  animation-delay: -5s;
+}
+
+.orb-3 {
+  width: 280px; height: 280px;
+  background: var(--mint);
+  bottom: 10%; left: -50px;
+  animation-delay: -9s;
+}
+
+.cyber-grid {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: 
+    radial-gradient(circle at 50% 50%, transparent 20%, #08060D 85%),
+    linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 100% 100%, 36px 36px, 36px 36px;
+}
+
+@keyframes float {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(40px, 50px) scale(1.1); }
+  100% { transform: translate(-30px, 20px) scale(0.95); }
+}
+
+.wrap { max-width: 760px; margin: 0 auto; padding: 0 24px; position: relative; }
+
+/* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.brand {
+  font-weight: 800;
+  font-size: 1.6rem;
+  letter-spacing: -.04em;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.brand i {
+  font-style: normal;
+  color: var(--acc);
+  display: inline-block;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.brand:hover i { transform: scale(1.4) rotate(12deg); }
+
+header a {
+  color: var(--ink);
+  font-weight: 600;
+  font-size: .95rem;
+  text-decoration: none;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+  padding: 8px 18px;
+  border-radius: 99px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+header a:hover {
+  background: var(--ink);
+  color: var(--bg);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.15);
+}
+
+.ig-icon {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+/* Hero Section */
+.hero { padding: 64px 0 56px; position: relative; }
+
+.badge-row { display: flex; align-items: center; gap: 10px; margin-bottom: 22px; flex-wrap: wrap; }
+
+.hero p.k {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--mint);
+  color: #08060D;
+  font-weight: 700;
+  font-size: .9rem;
+  padding: 6px 14px;
+  border-radius: 99px;
+  margin: 0;
+  box-shadow: 0 0 15px var(--mint-glow);
+}
+
+.hero .drop-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 90, 54, 0.15);
+  border: 1px solid var(--acc);
+  color: #FF836B;
+  font-weight: 600;
+  font-size: .85rem;
+  padding: 5px 12px;
+  border-radius: 99px;
+}
+
+.dot-pulse {
+  width: 8px; height: 8px;
+  background: var(--acc);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--acc);
+  animation: pulse 1.8s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 12px var(--acc); }
+  100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+h1 {
+  font-size: clamp(2.6rem, 11vw, 4.6rem);
+  line-height: .98;
+  letter-spacing: -.045em;
+  font-weight: 800;
+  margin: 0 0 22px;
+  max-width: 13ch;
+  position: relative;
+}
+
+.tag-raro {
+  display: inline-block;
+  background: var(--acc);
+  color: #08060D;
+  padding: 0 12px;
+  border-radius: 12px;
+  transform: rotate(-3deg);
+  box-shadow: 0 8px 20px var(--acc-glow);
+}
+
+.lead { font-size: 1.2rem; color: var(--mut); max-width: 52ch; margin: 0 0 30px; }
+
+/* Botones */
+.btns { display: flex; flex-wrap: wrap; gap: 12px; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 800;
+  text-decoration: none;
+  padding: 16px 28px;
+  border-radius: 99px;
+  background: var(--acc);
+  color: #08060D;
+  font-size: 1.02rem;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease;
+  will-change: transform;
+  box-shadow: 0 10px 25px -5px var(--acc-glow);
+}
+
+.btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 14px 30px -4px var(--acc-glow);
+}
+
+.btn.o {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(10px);
+  box-shadow: none;
+}
+
+.btn.o:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+/* Secciones */
+section { padding: 48px 0; border-top: 1px solid var(--line); }
+h2 { font-size: clamp(1.7rem, 6vw, 2.2rem); line-height: 1.1; letter-spacing: -.03em; margin: 0 0 16px; }
+p { margin: 0 0 14px; max-width: 60ch; }
+
+/* Tarjetas Glassmorphism */
+.meaning { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 22px; }
+
+.meaning div {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(16px);
+  border-radius: 20px;
+  padding: 22px 16px;
+  text-align: center;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.meaning div:hover {
+  transform: translateY(-4px);
+  border-color: var(--acc);
+  box-shadow: 0 12px 25px -10px var(--acc-glow);
+}
+
+.meaning b { display: block; font-size: 2.4rem; line-height: 1; letter-spacing: -.05em; color: var(--acc); }
+.meaning span { font-size: .88rem; color: var(--mut); margin-top: 6px; display: block; }
+
+.grid { display: grid; gap: 14px; margin-top: 20px; }
+@media(min-width: 620px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(16px);
+  border-radius: 20px;
+  padding: 24px;
+  position: relative;
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(166, 235, 205, 0.4);
+  box-shadow: 0 16px 32px -10px rgba(0, 0, 0, 0.5);
+}
+
+.card h3 { margin: 0 0 8px; font-size: 1.15rem; letter-spacing: -.01em; display: flex; align-items: center; gap: 8px; }
+.card p { margin: 0; color: var(--mut); font-size: .96rem; }
+
+.step {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--line);
+  color: var(--mint);
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  margin-bottom: 14px;
+  transition: all 0.3s ease;
+}
+
+.card:hover .step {
+  transform: scale(1.15) rotate(-6deg);
+  background: var(--acc);
+  color: #08060D;
+  border-color: var(--acc);
+}
+
+.final {
+  text-align: center;
+  padding: 64px 24px;
+  background: linear-gradient(180deg, rgba(23, 16, 38, 0) 0%, rgba(23, 16, 38, 0.8) 100%);
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  margin: 40px 0;
+  backdrop-filter: blur(16px);
+}
+
+.final p { margin: 0 auto 26px; color: var(--mut); }
+
+footer {
+  border-top: 1px solid var(--line);
+  padding: 28px 0 36px;
+  color: var(--mut);
+  font-size: .9rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Animaciones Reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stagger > *:nth-child(1) { transition-delay: 0.05s; }
+.stagger > *:nth-child(2) { transition-delay: 0.15s; }
+.stagger > *:nth-child(3) { transition-delay: 0.25s; }
 </style>
 </head>
 <body>
+
+<div class="bg-mesh">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+<div class="cyber-grid"></div>
+
 <div class="wrap">
-  <header>
+  <header class="reveal">
     <div class="brand">VDD<i>.</i></div>
-    <a href="https://instagram.com/VDD.look" target="_blank" rel="noopener">@VDD.look</a>
+    <a href="https://instagram.com/VDD.look" target="_blank" rel="noopener">
+      <svg class="ig-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      @VDD.look
+    </a>
   </header>
 
   <div class="hero">
-    <p class="k">Vibe Odd · Vibra rara</p>
-    <h1>Lo raro es tu mejor estilo.</h1>
-    <p class="lead">VDD es una marca de reventa que vende de todo: piezas seleccionadas a mano para quienes prefieren un estilo propio antes que la tendencia de todos.</p>
-    <div class="btns">
-      <a class="btn" href="https://instagram.com/VDD.look" target="_blank" rel="noopener">Ver las piezas en Instagram</a>
-      <a class="btn o" href="#marca">Conocer la marca</a>
+    <div class="badge-row reveal">
+      <p class="k">Vibe Odd · Vibra rara</p>
+      <div class="drop-badge"><span class="dot-pulse"></span> 🇦🇷📍 Buenos Aires</div>
+    </div>
+    <h1 class="reveal">Lo <span class="tag-raro">raro✦</span> es tu mejor estilo 🔥</h1>
+    <p class="lead reveal">VDD es una marca de reventa que vende de todo: piezas seleccionadas a mano para quienes prefieren un estilo propio antes que la tendencia de todos.</p>
+    <div class="btns reveal">
+      <a class="btn" href="https://instagram.com/VDD.look" target="_blank" rel="noopener">📦 Ver las piezas en Instagram</a>
+      <a class="btn o" href="#marca">💸 Conocer la marca</a>
     </div>
   </div>
 
   <section id="marca">
-    <h2>Qué significa VDD</h2>
-    <p>VDD viene de <strong>Vibe Odd</strong>, “vibra rara”. Es nuestra forma de decir que lo distinto no es un defecto: es lo que hace que algo se recuerde.</p>
-    <div class="meaning">
-      <div><b>Vibe</b><span>Energía y actitud</span></div>
-      <div><b>Odd</b><span>Raro, fuera de lo común</span></div>
+    <h2 class="reveal">Qué significa VDD</h2>
+    <p class="reveal">VDD viene de <strong>Vibe Odd</strong>, “vibra rara”. Es nuestra forma de decir que lo distinto no es un defecto: es lo que hace que algo se recuerde.</p>
+    <div class="meaning stagger">
+      <div class="reveal"><b>Vibe</b><span>⚡ Energía y actitud</span></div>
+      <div class="reveal"><b>Odd</b><span>🌀 Raro, fuera de lo común</span></div>
     </div>
   </section>
 
   <section>
-    <h2>Por qué VDD</h2>
-    <div class="grid">
-      <div class="card"><h3>Selección curada</h3><p>Cada pieza se elige por su carácter y su estado, no por volumen.</p></div>
-      <div class="card"><h3>Piezas únicas</h3><p>Reventa significa pocas unidades: lo que ves puede no volver.</p></div>
-      <div class="card"><h3>Segunda vida</h3><p>Dar otra oportunidad a lo que ya existe es elegir distinto y consumir con más conciencia.</p></div>
+    <h2 class="reveal">Por qué VDD</h2>
+    <div class="grid stagger">
+      <div class="card reveal"><h3>🎯 Selección curada</h3><p>Cada pieza se elige por su carácter y su estado, no por volumen.</p></div>
+      <div class="card reveal"><h3>💎 Piezas únicas</h3><p>Reventa significa pocas unidades: lo que ves puede no volver.</p></div>
+      <div class="card reveal"><h3>♻️ Segunda vida</h3><p>Dar otra oportunidad a lo que ya existe es elegir distinto y consumir con más conciencia.</p></div>
     </div>
   </section>
 
   <section>
-    <h2>Cómo comprar</h2>
-    <div class="grid">
-      <div class="card"><div class="step">1</div><h3>Elige</h3><p>Mira las piezas disponibles en nuestro Instagram.</p></div>
-      <div class="card"><div class="step">2</div><h3>Escríbenos</h3><p>Mándanos un mensaje directo para apartar la tuya.</p></div>
-      <div class="card"><div class="step">3</div><h3>Disfrútala</h3><p>Coordinamos el pago y la entrega contigo.</p></div>
+    <h2 class="reveal">Cómo comprar</h2>
+    <div class="grid stagger">
+      <div class="card reveal"><div class="step">1</div><h3>👀 Elige</h3><p>Mira las piezas disponibles en nuestro Instagram.</p></div>
+      <div class="card reveal"><div class="step">2</div><h3>📩 Escríbenos</h3><p>Mándanos un mensaje directo para apartar la tuya.</p></div>
+      <div class="card reveal"><div class="step">3</div><h3>🫂♥️ Disfrútala</h3><p>Coordinamos el pago y la entrega contigo.</p></div>
     </div>
   </section>
 
-  <section class="final">
-    <h2>Encuentra tu vibra rara</h2>
+  <section class="final reveal">
+    <h2>🔝 Encuentra tu vibra rara</h2>
     <p>Novedades y piezas nuevas de todo tipo en Instagram.</p>
-    <a class="btn" href="https://instagram.com/VDD.look" target="_blank" rel="noopener">Síguenos en @VDD.look</a>
+    <a class="btn" href="https://instagram.com/VDD.look" target="_blank" rel="noopener">
+      <svg class="ig-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      Síguenos en @VDD.look
+    </a>
   </section>
 
-  <footer><span>VDD · Vibe Odd</span><span>Reventa con vibra rara</span></footer>
+  <footer>
+    <span>VDD · Vibe Odd</span>
+    <span>Reventa con vibra rara</span>
+  </footer>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  });
+</script>
 </body>
 </html>
